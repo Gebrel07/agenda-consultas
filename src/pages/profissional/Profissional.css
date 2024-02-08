@@ -1,0 +1,10 @@
+.profissional .infos-gerais {
+    display: flex;
+    background-color: bisque;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.profissional .delete {
+    cursor: pointer;
+}

@@ -1,0 +1,22 @@
+nav {
+    display: flex;
+    padding: 10px 30px;
+    border-bottom: solid lightgray 1px;
+    margin-bottom: 10px;
+    background-color: white;
+}
+
+nav .brand {
+    font-weight: bold;
+}
+
+
+nav a {
+    text-decoration: none;
+    color: black;
+    margin-right: 10px;
+}
+
+nav a:last-child {
+    margin-right: 0;
+}
