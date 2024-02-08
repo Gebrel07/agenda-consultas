@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/NavBar";
+import Agenda from "./pages/agenda/Agenda";
 import Home from "./pages/home/Home";
 import CriarProfissional from "./pages/profissional/CriarProfissional";
 import Profissional from "./pages/profissional/Profissional";
@@ -20,6 +21,9 @@ function App() {
             </Route>
             <Route exact path="/profissionais/:id">
               <Profissional />
+            </Route>
+            <Route path="/agenda">
+              <Agenda />
             </Route>
           </Switch>
         </div>
