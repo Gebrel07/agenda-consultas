@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import ProfissionalForm from "./ProfissionalForm";
 
 export default function CriarProfissional() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const url = "http://localhost:3000/profissionais";
   const { data, postData } = useFetch(url, "POST");
 
@@ -14,9 +14,9 @@ export default function CriarProfissional() {
 
   useEffect(() => {
     if (data) {
-      history.push(`/profissionais/${data.id}`);
+      navigate(`/profissionais/${data.id}`);
     }
-  }, [data, history]);
+  }, [data, navigate]);
 
   return (
     <div>

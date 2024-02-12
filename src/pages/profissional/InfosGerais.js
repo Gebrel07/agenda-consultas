@@ -1,14 +1,14 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import trashCan from "../../assets/trash-can.svg";
 import doctorIcon from "../../assets/user-doctor.svg";
 
 export default function InfosGerais({ profissional }) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleDelete = () => {
     if (window.confirm("Deletar este profissional?")) {
       window.alert("Deletado com sucesso!");
-      history.push("/");
+      navigate("/");
     }
   };
 
@@ -29,7 +29,7 @@ export default function InfosGerais({ profissional }) {
         <button
           className="btn btn-primary"
           onClick={() => {
-            history.push(`/profissionais/${profissional.id}/editar`);
+            navigate.push(`/profissionais/${profissional.id}/editar`);
           }}>
           Editar
         </button>

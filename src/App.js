@@ -1,4 +1,4 @@
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import RouteGuard from "./RouteGuard";
 import NavBar from "./components/NavBar";
@@ -19,28 +19,17 @@ function App() {
         <BrowserRouter>
           <NavBar />
           <div className="app-content">
-            <Switch>
-              <Route exact path="/">
-                <RouteGuard TargetPage={Home} />
-              </Route>
-              <Route exact path="/profissionais/criar">
-                <RouteGuard TargetPage={CriarProfissional} />
-              </Route>
-              <Route exact path="/profissionais/:id">
-                <RouteGuard TargetPage={Profissional} />
-              </Route>
-              <Route path="/agenda">
-                <RouteGuard TargetPage={Agenda} />
-              </Route>
-              <Route path="/criar-conta">
-                {user && <Redirect to="/" />}
-                {!user && <CriarConta />}
-              </Route>
-              <Route path="/login">
-                {user && <Redirect to="/" />}
-                {!user && <Login />}
-              </Route>
-            </Switch>
+            <Routes>
+              <Route path="/" element={<RouteGuard TargetPage={Home} />} />
+              <Route
+                path="/profissionais/criar"
+                element={<RouteGuard TargetPage={CriarProfissional} />}
+              />
+              <Route path="/profissionais/:id" element={<RouteGuard TargetPage={Profissional} />} />
+              <Route path="/agenda" element={<RouteGuard TargetPage={Agenda} />} />
+              <Route path="/criar-conta" element={user ? <Navigate to="/" /> : <CriarConta />} />
+              <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
+            </Routes>
           </div>
         </BrowserRouter>
       )}

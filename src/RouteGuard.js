@@ -1,4 +1,4 @@
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuthContext } from "./hooks/useAuthcontext";
 
 export default function RouteGuard({ TargetPage }) {
@@ -7,7 +7,7 @@ export default function RouteGuard({ TargetPage }) {
   return (
     <>
       {user && <TargetPage />}
-      {!user && <Redirect to="/login" />}
+      {!user && <Navigate to="/login" />}
     </>
   );
 }

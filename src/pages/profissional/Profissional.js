@@ -1,11 +1,11 @@
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import InfosGerais from "./InfosGerais";
 import "./Profissional.css";
 
 export default function Profissional() {
   const { id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const url = `http://localhost:3000/profissionais/${id}`;
   const { data: prof, isPending, error } = useFetch(url);
 
@@ -15,7 +15,7 @@ export default function Profissional() {
       {isPending && <p className="loading">Carregando...</p>}
       {prof && (
         <div>
-          <button className="btn btn-primary mb-2" onClick={() => history.goBack()}>
+          <button className="btn btn-primary mb-2" onClick={() => navigate(-1)}>
             Voltar
           </button>
           <div className="border border-secondary rounded p-4 rounded shadow">
