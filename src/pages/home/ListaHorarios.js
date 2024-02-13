@@ -1,8 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import doctorIcon from "../../assets/user-doctor.svg";
+import { useAuthContext } from "../../hooks/useAuthcontext";
+import { useHorarios } from "../../hooks/useHorarios";
 
 export default function ListaHorarios({ horarios }) {
-  const handleClick = (idhorario) => {
-    console.log("horario: " + idhorario);
+  const { updateIdCliente } = useHorarios();
+  const { user } = useAuthContext();
+  const navigate = useNavigate();
+
+  const handleClick = async (idhorario) => {
+    // reservar horario e redirecionar para agenda do usuário
+    await updateIdCliente(idhorario, user.uid);
+    navigate("/minha-agenda");
   };
 
   return (
