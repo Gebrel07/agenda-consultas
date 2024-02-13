@@ -16,10 +16,10 @@ export const useHorarios = () => {
     return res;
   };
 
-  const agendar = async (idHorario, idCliente) => {
+  const updateIdCliente = async (idHorario, idCliente) => {
     const resp = await ref.doc(idHorario).update({ idCliente });
     return resp;
   };
 
-  return { getHorarios, agendar };
+  return { getHorarios, updateIdCliente };
 };
