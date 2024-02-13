@@ -4,11 +4,19 @@ import { useAgenda } from "../../hooks/useAgenda";
 import ListaHorarios from "./ListaHorarios";
 
 export default function Home() {
+  const dateFromString = (dateString) => {
+    const dateObj = new Date(Date.parse(dateString));
+    return dateObj;
+  };
+
+  const dateToString = (dateObj) => {
+    return dateObj.toISOString().substring(0, 10);
+  };
+
   const [data, setData] = useState(() => {
-    // data inicial do formulario
     const today = new Date();
-    today.setUTCDate(today.getDate());
-    return today.toISOString().substring(0, 10);
+    today.setHours(0, 0, 0, 0);
+    return today;
   });
   const { agenda, isPending, getAgenda } = useAgenda();
 
@@ -31,8 +39,8 @@ export default function Home() {
           <input
             className="form-control"
             type="date"
-            onChange={(e) => setData(e.target.value)}
-            value={data}
+            onChange={(e) => setData(dateFromString(e.target.value))}
+            value={dateToString(data)}
             required
           />
         </div>
