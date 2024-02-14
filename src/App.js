@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import RouteGuard from "./RouteGuard";
+import Alert from "./components/Alert";
 import NavBar from "./components/NavBar";
 import { useAuthContext } from "./hooks/useAuthcontext";
 import Agenda from "./pages/agenda/Agenda";
@@ -20,6 +21,7 @@ function App() {
         <BrowserRouter>
           <NavBar />
           <div className="app-content">
+            <Alert />
             <Routes>
               <Route path="/" element={<RouteGuard TargetPage={Home} />} />
               <Route
