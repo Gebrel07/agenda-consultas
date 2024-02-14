@@ -7,7 +7,7 @@ export const AlertContextProvider = ({ children }) => {
   const [body, setBody] = useState(null);
   const [cls, setCls] = useState(null);
 
-  const showAlert = (alertTitle, alertClass = null, alertBody = null) => {
+  const showAlert = (alertTitle, alertClass, alertBody = null) => {
     setTitle(alertTitle);
     setBody(alertBody);
     setCls(alertClass);
