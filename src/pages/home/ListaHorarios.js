@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import doctorIcon from "../../assets/user-doctor.svg";
+import { useAlertContext } from "../../hooks/useAlertContext";
 import { useAuthContext } from "../../hooks/useAuthcontext";
 import { useHorarios } from "../../hooks/useHorarios";
 
 export default function ListaHorarios({ horarios }) {
+  const { showAlert } = useAlertContext();
   const { updateIdCliente } = useHorarios();
   const { user } = useAuthContext();
   const navigate = useNavigate();
@@ -11,6 +13,7 @@ export default function ListaHorarios({ horarios }) {
   const handleClick = async (idhorario) => {
     // reservar horario e redirecionar para agenda do usuário
     await updateIdCliente(idhorario, user.uid);
+    showAlert("Horário reservado com sucesso!", "alert-success");
     navigate("/minha-agenda");
   };
 
