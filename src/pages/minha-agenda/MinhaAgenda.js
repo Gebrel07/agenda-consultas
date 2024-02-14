@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useAlertContext } from "../../hooks/useAlertContext";
 import { useAuthContext } from "../../hooks/useAuthcontext";
 import { useHorarios } from "../../hooks/useHorarios";
 import { useMinhaAgenda } from "../../hooks/useMinhaAgenda";
@@ -9,6 +10,7 @@ import ListaHorarios from "./ListaHorarios";
 
 export default function MinhaAgenda() {
   const { user } = useAuthContext();
+  const { showAlert } = useAlertContext();
   const { getMeusHorarios, isPending, minhaAgenda } = useMinhaAgenda();
   const { updateIdCliente } = useHorarios();
 
@@ -20,6 +22,11 @@ export default function MinhaAgenda() {
   const cancelarConsulta = async (idHorario) => {
     // limpar idCliente
     await updateIdCliente(idHorario, null);
+    // emitir mensagem
+    const horario = minhaAgenda.find((hr) => {
+      return hr.id === idHorario;
+    });
+    showAlert(`Horário cancelado: ${horario.data} - ${horario.hora}`, "alert-info");
     // recarregar horarios
     await getMeusHorarios(user.uid);
   };
