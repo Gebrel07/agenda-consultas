@@ -48,6 +48,8 @@ export const useMinhaAgenda = () => {
     const horarios = await getHorarios(idUsuario);
 
     if (!horarios.length) {
+      setIsPending(false);
+      setMinhaAgenda([]);
       return null;
     }
 
@@ -55,6 +57,12 @@ export const useMinhaAgenda = () => {
       return hr.idProf;
     });
     const profissionais = await getProfissionais(idsProfs);
+
+    if (!profissionais.length) {
+      setIsPending(false);
+      setMinhaAgenda([]);
+      return null;
+    }
 
     const res = juntarQueries(horarios, profissionais);
 

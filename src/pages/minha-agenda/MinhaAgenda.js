@@ -17,11 +17,11 @@ export default function MinhaAgenda() {
     // eslint-disable-next-line
   }, []);
 
-  const cancelarConsulta = (idHorario) => {
+  const cancelarConsulta = async (idHorario) => {
     // limpar idCliente
-    updateIdCliente(idHorario, null);
+    await updateIdCliente(idHorario, null);
     // recarregar horarios
-    getMeusHorarios(user.uid);
+    await getMeusHorarios(user.uid);
   };
 
   return (
@@ -30,10 +30,11 @@ export default function MinhaAgenda() {
       {isPending && <Spinner />}
       {!isPending && (
         <>
-          {minhaAgenda.length && (
+          {minhaAgenda.length ? (
             <ListaHorarios horarios={minhaAgenda} cancelarCallback={cancelarConsulta} />
+          ) : (
+            <p>Nenhum horário agendado</p>
           )}
-          {!minhaAgenda.length && <p>Nenhum horário agendado</p>}
         </>
       )}
     </div>
