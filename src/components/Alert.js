@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useAlertContext } from "../hooks/useAlertContext";
+import styles from "./Alert.module.css";
 
 export default function Alert() {
   const { title, body, cls, hideAlert } = useAlertContext();
@@ -18,7 +19,7 @@ export default function Alert() {
   }
 
   return (
-    <div className={`alert ${cls}`} role="alert">
+    <div className={`alert ${cls} ${styles.container} p-4`} role="alert">
       <div className="d-flex justify-content-between align-items-center">
         <span>{title}</span>
         <button className="btn-close" onClick={hideAlert}></button>

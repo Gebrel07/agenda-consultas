@@ -1,5 +1,9 @@
+@import url("../App.css");
+
 .container {
     position: fixed;
-    bottom: 20px;
-    width: 1px;
+    bottom: 5%;
+    /* manter distancia igual à do container da aplicação em App.js */
+    right: var(--distance-x);
+    left: var(--distance-x);
 }
