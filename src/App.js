@@ -12,7 +12,7 @@ import BuscaHorarios from "./pages/BuscaHorarios/BuscaHorarios";
 import CriarConta from "./pages/criarConta/CriarConta";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
-import MinhaAgenda from "./pages/minha-agenda/MinhaAgenda";
+import MinhaAgenda from "./pages/MinhaAgenda/MinhaAgenda";
 import CriarProfissional from "./pages/profissional/CriarProfissional";
 import Profissional from "./pages/profissional/Profissional";
 
