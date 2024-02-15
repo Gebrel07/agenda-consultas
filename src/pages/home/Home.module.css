@@ -1,0 +1,42 @@
+.menu {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-between;
+    row-gap: 30px;
+}
+
+.title {
+    text-align: center;
+    font-size: small;
+}
+
+.icon {
+    border: solid #95a5a6 1px;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.icon img {
+    width: 50px;
+}
+
+.icon:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+@media only screen and (min-width: 500px) {
+    .menu {
+        /* 4 cols para telas maiores */
+        grid-template-columns: auto auto auto auto;
+    }
+
+    .title {
+        font-size: medium;
+    }
+
+    .icon img {
+        width: 80px;
+    }
+}
