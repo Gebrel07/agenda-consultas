@@ -8,7 +8,7 @@ import "./App.css";
 
 // pages
 import Agenda from "./pages/agenda/Agenda";
-import BuscaHorarios from "./pages/busca-horarios/BuscaHorarios";
+import BuscaHorarios from "./pages/BuscaHorarios/BuscaHorarios";
 import CriarConta from "./pages/criarConta/CriarConta";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
