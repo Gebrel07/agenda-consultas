@@ -9,7 +9,7 @@ import "./App.css";
 // pages
 import Agenda from "./pages/agenda/Agenda";
 import BuscaHorarios from "./pages/BuscaHorarios/BuscaHorarios";
-import CriarConta from "./pages/criarConta/CriarConta";
+import CriarConta from "./pages/CriarConta/CriarConta";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import MinhaAgenda from "./pages/MinhaAgenda/MinhaAgenda";
