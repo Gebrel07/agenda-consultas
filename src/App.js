@@ -7,12 +7,13 @@ import { useAuthContext } from "./hooks/useAuthcontext";
 import "./App.css";
 
 // pages
-import Agenda from "./pages/agenda/Agenda";
 import BuscaHorarios from "./pages/BuscaHorarios/BuscaHorarios";
 import CriarConta from "./pages/CriarConta/CriarConta";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import MinhaAgenda from "./pages/MinhaAgenda/MinhaAgenda";
+import MinhaConta from "./pages/MinhaConta/MinhaConta";
+import Agenda from "./pages/agenda/Agenda";
 import CriarProfissional from "./pages/profissional/CriarProfissional";
 import Profissional from "./pages/profissional/Profissional";
 
@@ -43,6 +44,7 @@ function App() {
               <Route path="/home" element={<RouteGuard TargetPage={Home} />} />
               <Route path="/horarios" element={<RouteGuard TargetPage={BuscaHorarios} />} />
               <Route path="minha-agenda" element={<RouteGuard TargetPage={MinhaAgenda} />} />
+              <Route path="minha-conta" element={<RouteGuard TargetPage={MinhaConta} />} />
             </Routes>
           </div>
         </BrowserRouter>
