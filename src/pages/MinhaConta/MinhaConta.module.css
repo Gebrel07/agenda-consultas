@@ -1,4 +1,7 @@
 .img-container {
-    width: 150px;
     cursor: pointer;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
 }

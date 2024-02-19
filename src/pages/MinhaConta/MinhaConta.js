@@ -32,15 +32,22 @@ export default function MinhaConta() {
       )}
       <div className="d-flex justify-content-center mb-3">
         <div
-          className={`${styles["img-container"]} border rounded position-relative shadow`}
+          className={`${styles["img-container"]} border shadow`}
           onClick={() => {
             setCurrentForm(<FormImg onClose={onClose} />);
             setModalTitle("Alterar Imagem de Usuário");
           }}>
-          <img width="100%" src={user.photoURL ? user.photoURL : person} alt="Imagem Perfil" />
-          <div className="position-absolute top-0 end-0 mt-2 me-2">
-            <span className="material-symbols-outlined text-primary align-middle">edit</span>
-          </div>
+          <img
+            width="100%"
+            height="100%"
+            src={user.photoURL ? user.photoURL : person}
+            onError={(e) => {
+              // evitar loops
+              e.target.onerror = null;
+              e.target.src = person;
+            }}
+            alt="Imagem Perfil"
+          />
         </div>
       </div>
       <div className="d-flex flex-column gap-3 p-4 border rounded shadow">
