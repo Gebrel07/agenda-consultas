@@ -10,6 +10,7 @@ import person from "../../assets/person.svg";
 // components
 import Modal from "../../components/Modal";
 import FormEmail from "./FormEmail";
+import FormImg from "./FormImg";
 import FormNome from "./FormNome";
 
 export default function MinhaConta() {
@@ -30,7 +31,12 @@ export default function MinhaConta() {
         </Modal>
       )}
       <div className="d-flex justify-content-center mb-3">
-        <div className={`${styles["img-container"]} border rounded position-relative shadow`}>
+        <div
+          className={`${styles["img-container"]} border rounded position-relative shadow`}
+          onClick={() => {
+            setCurrentForm(<FormImg onClose={onClose} />);
+            setModalTitle("Alterar Imagem de Usuário");
+          }}>
           <img width="100%" src={user.photoURL ? user.photoURL : person} alt="Imagem Perfil" />
           <div className="position-absolute top-0 end-0 mt-2 me-2">
             <span className="material-symbols-outlined text-primary align-middle">edit</span>
