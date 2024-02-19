@@ -9,6 +9,7 @@ import person from "../../assets/person.svg";
 
 // components
 import Modal from "../../components/Modal";
+import FormEmail from "./FormEmail";
 import FormNome from "./FormNome";
 
 export default function MinhaConta() {
@@ -50,7 +51,12 @@ export default function MinhaConta() {
         </div>
         <div className="d-flex justify-content-between align-items-center">
           <span>Email: {user.email}</span>
-          <button className="btn">
+          <button
+            className="btn"
+            onClick={() => {
+              setCurrentForm(<FormEmail onClose={onClose} />);
+              setModalTitle("Alterar Email de Úsuario");
+            }}>
             <span className="material-symbols-outlined text-primary align-middle">edit</span>
           </button>
         </div>
