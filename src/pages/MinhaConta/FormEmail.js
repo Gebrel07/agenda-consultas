@@ -36,8 +36,8 @@ export default function FormEmail({ onClose }) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label className="form-label">Nome</label>
         <fieldset disabled={isPending ? true : false}>
+          <label className="form-label">Nome</label>
           <input
             type="email"
             className="form-control"

@@ -69,7 +69,7 @@ export default function MinhaConta() {
             className="btn"
             onClick={() => {
               setCurrentForm(<FormEmail onClose={onClose} />);
-              setModalTitle("Alterar Email de Úsuario");
+              setModalTitle("Alterar Email de Usuário");
             }}>
             <span className="material-symbols-outlined text-primary align-middle">edit</span>
           </button>

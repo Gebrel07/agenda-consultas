@@ -28,13 +28,14 @@ export default function FormNome({ onClose }) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label className="form-label">Nome</label>
         <fieldset disabled={isPending ? true : false}>
+          <label className="form-label">Nome</label>
           <input
             className="form-control"
             required
             onChange={(e) => setDisplayName(e.target.value)}
             value={displayName}
+            autoFocus
           />
         </fieldset>
         <button
