@@ -9,7 +9,7 @@ export default function Navbar() {
 
   return (
     <nav className="d-flex align-items-center">
-      <Link to="/home" className="fw-bold">
+      <Link to={user ? "/home" : "/"} className="fw-bold">
         App Consultas
       </Link>
       <div className="ms-auto">
