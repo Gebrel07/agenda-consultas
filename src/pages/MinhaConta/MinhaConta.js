@@ -12,6 +12,7 @@ import Modal from "../../components/Modal";
 import FormEmail from "./FormEmail";
 import FormImg from "./FormImg";
 import FormNome from "./FormNome";
+import FormSenha from "./FormSenha";
 
 export default function MinhaConta() {
   const { user } = useAuthContext();
@@ -73,7 +74,14 @@ export default function MinhaConta() {
             <span className="material-symbols-outlined text-primary align-middle">edit</span>
           </button>
         </div>
-        <button className="btn text-primary">Alterar Senha</button>
+        <button
+          className="btn text-primary"
+          onClick={() => {
+            setCurrentForm(<FormSenha onClose={onClose} />);
+            setModalTitle("Alterar Senha do Usuário");
+          }}>
+          Alterar Senha
+        </button>
       </div>
     </>
   );
