@@ -1,0 +1,7 @@
+.container-datas {
+    overflow-y: scroll;
+}
+
+.opc-data {
+    cursor: pointer;
+}
