@@ -14,11 +14,20 @@ export default function Datas({ onSelData }) {
   const [dataSel, setDataSel] = useState(null); // data selecionada atualmente
   const { getDatas } = useDatas();
 
+  const selecionarData = (data) => {
+    setDataSel(data);
+    onSelData(data);
+  };
+
   useEffect(() => {
     getDatas()
       .then((res) => {
         setDatas(res);
         setIsPending(false);
+        if (res && res.length) {
+          // se houver datas, selecionar a primeira ao carregar
+          selecionarData(res[0].data);
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -49,8 +58,7 @@ export default function Datas({ onSelData }) {
           className={`${styles["opc-data"]} border border-secondary rounded 
           shadow py-2 px-4 text-center ${data.data === dataSel ? "bg-secondary" : ""}`}
           onClick={() => {
-            setDataSel(data.data);
-            onSelData(data.data);
+            selecionarData(data.data);
           }}>
           <span>{data.diaSem}</span>
           <h4 className="m-0">{data.dia}</h4>
