@@ -17,6 +17,7 @@ export const useDatas = () => {
       const query = await projectFirestore
         .collection("horarios")
         .where("dataHora", ">=", new Date())
+        .where("idCliente", "==", null)
         .get();
       // pegar dataHora (firestore.timestamp) de cada horario
       query.docs.forEach((doc) => {
