@@ -1,17 +1,22 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import App from "./App";
-import { AuthContextProvider } from "./context/AuthContext";
-import "./index.css";
-import { AlertContextProvider } from "./context/AlertContext";
 
-ReactDOM.render(
+// contextos
+import { AlertContextProvider } from "./context/AlertContext";
+import { AuthContextProvider } from "./context/AuthContext";
+
+// estilos
+import "./index.css";
+
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(
   <React.StrictMode>
     <AuthContextProvider>
       <AlertContextProvider>
         <App />
       </AlertContextProvider>
     </AuthContextProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
