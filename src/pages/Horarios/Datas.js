@@ -37,7 +37,7 @@ export default function Datas({ onSelData }) {
   }
 
   if (!datas) {
-    <p>Nenhuma data disponível para agendamento</p>;
+    return <p>Nenhuma data disponível para agendamento</p>;
   }
 
   // NOTE: a data de cada objeto de getDatas é única. Usar elas como chave
