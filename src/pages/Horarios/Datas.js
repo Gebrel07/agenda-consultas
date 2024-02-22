@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDatas } from "../../hooks/useDatas";
 
 // estilos
-import styles from "./BuscaHorarios.module.css";
+import styles from "./Horarios.module.css";
 
 // componentes
 import Spinner from "../../components/Spinner";

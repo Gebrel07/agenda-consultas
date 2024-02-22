@@ -7,7 +7,6 @@ import { useAuthContext } from "./hooks/useAuthcontext";
 import "./App.css";
 
 // pages
-import BuscaHorarios from "./pages/BuscaHorarios/BuscaHorarios";
 import CriarConta from "./pages/CriarConta/CriarConta";
 import Home from "./pages/Home/Home";
 import Index from "./pages/Index/Index";
@@ -19,6 +18,7 @@ import MinhaConta from "./pages/MinhaConta/MinhaConta";
 import RouteGuard from "./RouteGuard";
 import Alert from "./components/Alert";
 import NavBar from "./components/NavBar";
+import Horarios from "./pages/Horarios/Horarios";
 
 function App() {
   const { authIsReady, user } = useAuthContext();
@@ -35,7 +35,7 @@ function App() {
               <Route path="/criar-conta" element={user ? <Navigate to="/home" /> : <CriarConta />} />
               <Route path="/login" element={user ? <Navigate to="/home" /> : <Login />} />
               <Route path="/home" element={<RouteGuard TargetPage={Home} />} />
-              <Route path="/horarios" element={<RouteGuard TargetPage={BuscaHorarios} />} />
+              <Route path="/horarios" element={<RouteGuard TargetPage={Horarios} />} />
               <Route path="/minha-agenda" element={<RouteGuard TargetPage={MinhaAgenda} />} />
               <Route path="/minha-conta" element={<RouteGuard TargetPage={MinhaConta} />} />
             </Routes>

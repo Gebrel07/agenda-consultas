@@ -1,0 +1,35 @@
+.container-datas {
+    overflow-y: scroll;
+}
+
+.opc-data {
+    cursor: pointer;
+}
+
+.card-prof {
+    display: grid;
+    grid-template-columns: 150px auto;
+    column-gap: 30px;
+}
+
+.foto-prof img {
+    width: 80px;
+}
+
+.infos-prof {
+    text-align: start;
+}
+
+@media only screen and (max-width: 600px) {
+    .card-prof {
+        grid-template-columns: auto;
+    }
+
+    .foto-prof img {
+        width: 50px;
+    }
+
+    .infos-prof {
+        text-align: center;
+    }
+}

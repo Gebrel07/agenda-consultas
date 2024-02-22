@@ -1,51 +1,81 @@
-import { useState } from "react";
-import { useHorarios } from "./useHorarios";
-import { useProfissionais } from "./useProfissionais";
+import { fieldPath, projectFirestore } from "../firebase/config";
 
 export const useAgenda = () => {
-  const [isPending, setIsPending] = useState(false);
-  const [agenda, setAgenda] = useState([]);
-
-  const { getHorarios } = useHorarios();
-  const { getProfissionais } = useProfissionais();
-
-  const getAgenda = async (queryHorarios) => {
-    setIsPending(true);
-    const horarios = await getHorarios(queryHorarios);
-    const profs = await getProfissionais();
-    if (horarios && profs) {
-      setAgenda(tratarDados(horarios, profs));
+  const getAgenda = async (data) => {
+    const horarios = await getHorarios(data);
+    if (!horarios.length) {
+      return null;
     }
-    setIsPending(false);
+    const idProfs = getIdProfs(horarios);
+    const profs = await getProfs(idProfs);
+    return joinQueries(profs, horarios);
   };
 
-  const parseDate = (dataHora) => {
-    const opts = { day: "numeric", month: "short" };
-    return dataHora.toDate().toLocaleString("pt-BR", opts);
-  };
-
-  const parseHour = (dataHora) => {
-    const opts = { hour: "numeric", minute: "numeric" };
-    return dataHora.toDate().toLocaleString("pt-BR", opts);
-  };
-
-  const tratarDados = (horarios, profissionais) => {
+  const getHorarios = async (data) => {
+    const proxDia = new Date(data.getTime());
+    proxDia.setDate(proxDia.getDate() + 1);
     const res = [];
-    // encontrar profissional de id correspondente
-    horarios.forEach((horario) => {
-      const prof = profissionais.find((p) => {
-        return p.id === horario.idProf;
+    try {
+      const query = await projectFirestore
+        .collection("horarios")
+        .where("dataHora", ">=", data)
+        .where("dataHora", "<", proxDia)
+        .where("idCliente", "==", null)
+        .orderBy("dataHora", "asc")
+        .get();
+      query.docs.forEach((doc) => {
+        const horario = { ...doc.data(), id: doc.id };
+        setHora(horario); // inserir hora formatada da consulta
+        res.push(horario);
       });
-      // inserir horario  + profissional na lista
-      res.push({
-        ...horario,
-        prof,
-        data: parseDate(horario.dataHora),
-        hora: parseHour(horario.dataHora),
-      });
+    } catch (err) {
+      console.error(err);
+    }
+    return res;
+  };
+
+  const setHora = (horario) => {
+    const local = "pt-BR";
+    const opts = { hour: "numeric", minute: "numeric" };
+    const data = horario.dataHora.toDate();
+    horario.hora = data.toLocaleTimeString(local, opts);
+  };
+
+  const getIdProfs = (horarios) => {
+    const res = [];
+    horarios.forEach((hr) => {
+      res.push(hr.idProf);
     });
     return res;
   };
 
-  return { getAgenda, isPending, agenda };
+  const getProfs = async (idProfs) => {
+    const res = [];
+    try {
+      const query = await projectFirestore
+        .collection("profissionais")
+        .where(fieldPath.documentId(), "in", idProfs)
+        .get();
+      query.docs.forEach((doc) => {
+        res.push({ ...doc.data(), id: doc.id });
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    return res;
+  };
+
+  const joinQueries = (profs, horarios) => {
+    const res = [];
+    profs.forEach((prof) => {
+      // buscar horarios do profissional
+      const horariosProf = horarios.filter((hr) => {
+        return hr.idProf === prof.id;
+      });
+      res.push({ ...prof, horarios: horariosProf });
+    });
+    return res;
+  };
+
+  return { getAgenda };
 };
