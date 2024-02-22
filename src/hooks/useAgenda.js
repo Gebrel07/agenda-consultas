@@ -26,6 +26,7 @@ export const useAgenda = () => {
       query.docs.forEach((doc) => {
         const horario = { ...doc.data(), id: doc.id };
         setHora(horario); // inserir hora formatada da consulta
+        setDataString(horario); // inserir data formatada da consulta
         res.push(horario);
       });
     } catch (err) {
@@ -39,6 +40,13 @@ export const useAgenda = () => {
     const opts = { hour: "numeric", minute: "numeric" };
     const data = horario.dataHora.toDate();
     horario.hora = data.toLocaleTimeString(local, opts);
+  };
+
+  const setDataString = (horario) => {
+    const local = "pt-BR";
+    const opts = { day: "numeric", month: "long", year: "numeric" };
+    const data = horario.dataHora.toDate();
+    horario.dataString = data.toLocaleDateString(local, opts);
   };
 
   const getIdProfs = (horarios) => {
