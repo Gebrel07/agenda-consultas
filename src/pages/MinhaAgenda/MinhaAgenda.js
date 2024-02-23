@@ -1,49 +1,127 @@
-import { useEffect } from "react";
-import { useAlertContext } from "../../hooks/useAlertContext";
+import { useEffect, useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthcontext";
-import { useHorarios } from "../../hooks/useHorarios";
 import { useMinhaAgenda } from "../../hooks/useMinhaAgenda";
 
-// components
+// assets
+import doctorIcon from "../../assets/user-doctor.svg";
+
+// componentes
 import Spinner from "../../components/Spinner";
-import ListaHorarios from "./ListaHorarios";
+import ModalCancelar from "./ModalCancelar";
 
 export default function MinhaAgenda() {
   const { user } = useAuthContext();
-  const { showAlert } = useAlertContext();
-  const { getMeusHorarios, isPending, minhaAgenda } = useMinhaAgenda();
-  const { updateIdCliente } = useHorarios();
+
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState(null);
+
+  const [horarios, setHorarios] = useState(null);
+  const [horarioCancelar, setHorarioCancelar] = useState(null);
+
+  const { getMinhaAgenda } = useMinhaAgenda();
+
+  const hoje = new Date();
+
+  const horarioFuturo = (timestamp) => {
+    return timestamp.toDate() > hoje;
+  };
+
+  const fetchAgenda = () => {
+    setIsPending(true);
+    setError(null);
+    getMinhaAgenda(user.uid)
+      .then((res) => {
+        setHorarios(res);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Erro ao carregar agenda");
+      })
+      .finally(() => {
+        setIsPending(false);
+      });
+  };
 
   useEffect(() => {
-    getMeusHorarios(user.uid);
+    fetchAgenda();
     // eslint-disable-next-line
   }, []);
 
-  const cancelarConsulta = async (idHorario) => {
-    // limpar idCliente
-    await updateIdCliente(idHorario, null);
-    // emitir mensagem
-    const horario = minhaAgenda.find((hr) => {
-      return hr.id === idHorario;
-    });
-    showAlert(`Horário cancelado: ${horario.data} - ${horario.hora}`, "alert-info");
-    // recarregar horarios
-    await getMeusHorarios(user.uid);
+  const onClose = () => {
+    setHorarioCancelar(null);
   };
 
+  const onConfirm = () => {
+    fetchAgenda();
+    setHorarioCancelar(null);
+  };
+
+  if (isPending) {
+    return (
+      <div style={{ marginTop: "15%" }}>
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <p className="text-danger">{error}</p>;
+  }
+
+  if (!horarios || !horarios.length) {
+    return (
+      <>
+        <h3>Minha Agenda</h3>
+        <p>Nenhum horário agendado</p>
+      </>
+    );
+  }
+
   return (
-    <div>
-      <h3>Minha Agenda</h3>
-      {isPending && <Spinner />}
-      {!isPending && (
-        <>
-          {minhaAgenda.length ? (
-            <ListaHorarios horarios={minhaAgenda} cancelarCallback={cancelarConsulta} />
-          ) : (
-            <p>Nenhum horário agendado</p>
-          )}
-        </>
+    <>
+      {horarioCancelar && (
+        <ModalCancelar horario={horarioCancelar} onClose={onClose} onConfirm={onConfirm} />
       )}
-    </div>
+
+      <h3>Minha Agenda</h3>
+      {horarios.map((horario) => (
+        <div
+          key={horario.id}
+          className="d-flex justify-content-between mb-3 p-2 border 
+          border-secondary rounded align-items-center">
+          <div>
+            <div className="d-flex">
+              <div>
+                <img
+                  className="border border-secondary rounded me-2"
+                  src={horario.prof.img ? horario.prof.img : doctorIcon}
+                  onError={(e) => {
+                    e.target.onerror = null; // evitar loops
+                    e.target.src = doctorIcon; // fallback img
+                  }}
+                  width="60px"
+                  height="100%"
+                  alt="Imagem profissional"
+                />
+              </div>
+              <div>
+                <span className="fw-bold">{horario.prof.nome}</span> <br />
+                <span>{horario.prof.registro}</span> <br />
+                <span>Sexo: {horario.prof.sexo}</span>
+              </div>
+            </div>
+            <div className="mt-2">
+              <span>Data: {horario.dataString}</span> <br />
+              <span>Hora: {horario.hora}</span>
+            </div>
+          </div>
+          {horarioFuturo(horario.dataHora) && (
+            <button className="btn btn-primary" onClick={() => setHorarioCancelar(horario)}>
+              Cancelar
+            </button>
+          )}
+        </div>
+      ))}
+    </>
   );
 }
