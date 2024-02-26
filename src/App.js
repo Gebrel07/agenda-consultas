@@ -17,6 +17,7 @@ import MinhaConta from "./pages/MinhaConta/MinhaConta";
 // components
 import RouteGuard from "./RouteGuard";
 import Alert from "./components/Alert";
+import Menu from "./components/Menu/Menu";
 import NavBar from "./components/NavBar";
 import Horarios from "./pages/Horarios/Horarios";
 
@@ -28,6 +29,7 @@ function App() {
       {authIsReady && (
         <BrowserRouter>
           <NavBar />
+          {user && <Menu />}
           <div className="app-content">
             <Alert />
             <Routes>

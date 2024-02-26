@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthcontext";
-import { useLogout } from "../hooks/useLogout";
+
+// estilos
 import "./NavBar.css";
 
 export default function Navbar() {
-  const { logout } = useLogout();
   const { user } = useAuthContext();
+
+  const openMenu = () => {
+    document.getElementById("menu").classList.add("show");
+  };
 
   return (
     <nav className="d-flex align-items-center">
@@ -15,12 +19,9 @@ export default function Navbar() {
       <div className="ms-auto">
         {!user && <Link to="/login">Login</Link>}
         {user && (
-          <>
-            <span className="me-3">Olá, {user.displayName}</span>
-            <button className="btn btn-secondary" onClick={logout}>
-              Sair
-            </button>
-          </>
+          <button className="btn py-0" onClick={openMenu}>
+            <span className="material-symbols-outlined align-middle">menu</span>
+          </button>
         )}
       </div>
     </nav>
